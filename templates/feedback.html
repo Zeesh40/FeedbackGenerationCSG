@@ -1,11 +1,31 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block header %}
-  <h1>{% block title %}Generate some Feedback!{% endblock %}</h1>
-{% endblock %}
+{% block title %}Feedback Generator{% endblock %}
 
 {% block content %}
+<div class="container">
+    <!-- Left Pane: Input Section -->
+    <div class="left-pane">
+        <h2>Enter Criteria and Percentages</h2>
+        <form id="feedbackForm">
+            <div id="criteriaInputs">
+                <!-- Example Criteria Input Group -->
+                <div class="input-group">
+                    <input type="text" name="criteria[]" placeholder="Insert Criteria Name" required>
+                    <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" required>
+                </div>
+            </div>
+            <button type="button" class="btn add-btn" onclick="addCriteria()">Add +</button>
+            <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
+        </form>
+    </div>
 
+    <!-- Right Pane: Output Section -->
+    <div class="right-pane">
+        <h2>Generated Feedback</h2>
+        <div id="feedbackOutput">
+            <!-- Feedback will appear here -->
+        </div>
+    </div>
+</div>
 {% endblock %}
-
-

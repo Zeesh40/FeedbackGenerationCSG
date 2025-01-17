@@ -1,33 +1,337 @@
-ul {
-  list-style-type: none;
+/*base.html */
+
+/* Reset some default margins and paddings */
+* {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
-  background-color: #111;
-}
-
-h1 {
-  text-align: center;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: white;
-  font-family: Georgia, serif;
+  font-family: Arial, sans-serif;
+  line-height: 2.0;
+  margin: 0;
 }
 
+/* Navbar styling */
+nav {
+  position: fixed; /* Fixes the navbar at the top */
+  top: 0; /* Aligns it to the top of the viewport */
+  left: 0; /* Ensures it starts from the left edge */
+  width: 100%; /* Spans the full width of the page */
+  background-color: #333; /* Dark background color */
+  color: white; /* White text color */
+  padding: 10px 20px; /* Adds padding around the navbar content */
+  z-index: 1000; /* Keeps it above other elements */
+  display: flex; /* Makes the navbar a flex container */
+  align-items: center; /* Aligns items vertically */
+  justify-content: space-between; /* Spaces out the items horizontally */
+}
+
+nav h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.nav-wrapper ul {
+  list-style: none; /* Removes bullets */
+  display: flex; /* Displays list items horizontally */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-wrapper ul li {
+  margin-left: 20px; /* Adds space between list items */
+}
+
+.nav-wrapper ul li a {
+  text-decoration: none; /* Removes underline */
+  color: white; /* White link text */
+  font-size: 1em;
+  padding: 5px 10px; /* Adds padding around the link */
+  border-radius: 5px; /* Slightly rounded corners */
+}
+
+.nav-wrapper ul li a:hover {
+  background-color: #575757; /* Hover effect */
+}
+
+/* Content section styling */
+.content {
+  padding-top: 70px; /* Adds space to prevent overlap with the fixed navbar */
+  margin: 20px; /* Adds margin around the content */
+}
+
+.flash {
+  background-color: #ff9800; /* Flash message background color */
+  color: white; /* Flash message text color */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+/* feedback.html */
+
+/* New Styles for Two-Pane Feedback Layout */
+
+/* Main Container for Left and Right Panes */
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 20px auto;
+  width: 80%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Left Pane Styles */
+.left-pane {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.left-pane h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Button Styles */
+.btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #cce7ff;
+  color: #007bff;
+}
+
+.generate-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Container for Two Panes */
+.container {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Left Pane */
+.left-pane {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.left-pane h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-btn {
+  background-color: #cce7ff;
+  color: #007bff;
+}
+
+.generate-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Right Pane */
+.right-pane {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.right-pane h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+#feedbackOutput {
+  font-size: 14px;
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-height: 100px;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  .left-pane {
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+  }
+}
+
+/* home.html */
+
+homebody {
+  height: 600px;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 500px 100px;
+  grid-template-columns: 1fr 30px 30px 30px 30px 30px 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+main#carousel {
+  grid-row: 1 / 2;
+  grid-column: 1 / 8;
+  width: 100vw;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  --items: 5;
+  --middle: 3;
+  --position: 1;
+  pointer-events: none;
+}
+
+div.item {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  background-color: coral;
+  --r: calc(var(--position) - var(--offset));
+  --abs: max(calc(var(--r) * -1), var(--r));
+  transition: all 0.25s linear;
+  transform: rotateY(calc(-10deg * var(--r)))
+    translateX(calc(-300px * var(--r)));
+  z-index: calc((var(--position) - var(--abs)));
+}
+
+div.item:nth-of-type(1) {
+  --offset: 1;
+  background-color: #00c3ff;
+}
+div.item:nth-of-type(2) {
+  --offset: 2;
+  background-color: #00b7ff;;
+}
+div.item:nth-of-type(3) {
+  --offset: 3;
+  background-color: #0099ff;
+}
+div.item:nth-of-type(4) {
+  --offset: 4;
+  background-color: #008cff;
+}
+div.item:nth-of-type(5) {
+  --offset: 5;
+  background-color: #007bff;
+}
+
+input:nth-of-type(1) {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(1):checked ~ main#carousel {
+  --position: 1;
+}
+
+input:nth-of-type(2) {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(2):checked ~ main#carousel {
+  --position: 2;
+}
+
+input:nth-of-type(3) {
+  grid-column: 4 /5;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(3):checked ~ main#carousel {
+  --position: 3;
+}
+
+input:nth-of-type(4) {
+  grid-column: 5 / 6;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(4):checked ~ main#carousel {
+  --position: 4;
+}
+
+input:nth-of-type(5) {
+  grid-column: 6 / 7;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(5):checked ~ main#carousel {
+  --position: 5;
+}

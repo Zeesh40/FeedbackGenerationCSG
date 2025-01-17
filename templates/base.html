@@ -1,28 +1,31 @@
 <!doctype html>
+<html lang="en">
 <head>
     <title>{% block title %}{% endblock %} - Final Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-
+</head>
+<body>
 <nav>
-  <h1>Automated Feedback Generation</h1>
+    <h1>Automated Feedback Generation</h1>
     <div class="nav-wrapper">
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="{{ url_for('home') }}"><i class="fa fa-fw fa-home"></i> Home</a> </li>
-        <li><a href="{{ url_for('feedback') }}"><i class="fa fa-cogs"></i> Feedback</a> </li>
-      </ul>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('home') }}"><i class="fa fa-fw fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('feedback') }}"><i class="fa fa-cogs"></i> Feedback</a></li>
+        </ul>
     </div>
 </nav>
 <section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
 </section>
+</body>
+</html>
 
 
 
