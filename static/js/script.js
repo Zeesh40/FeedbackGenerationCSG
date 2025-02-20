@@ -1,25 +1,62 @@
-// Add a new criteria input group dynamically
-function addCriteria() {
-    const container = document.getElementById('criteriaInputs');
-    const inputGroups = container.querySelectorAll('.input-group');
+let criteriaCount = 1; // Default criteria already present
+const maxCriteria = 10; // Limit of 10
 
-    // Limit to 6 criteria
-    if (inputGroups.length >= 6) {
-        alert('You can only add up to 6 criteria.');
-        return;
+function addCriteria() {
+    if (criteriaCount >= maxCriteria) {
+        swal.fire({
+            title: "Oh No!",
+            text: "You have reached the maximum number of criterias that can be added.",
+            icon: "warning"
+        });
+        return; // Stop execution if the limit is reached
     }
 
-    const div = document.createElement('div');
-    div.classList.add('input-group');
-    div.innerHTML = `
-        <input type="text" name="criteria[]" placeholder="Insert Criteria Name" required>
-        <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" required>
-    `;
-    container.appendChild(div);
+    var criteriaContainer = document.getElementById("criteriaInputs");
+
+    var newInputGroup = document.createElement("div");
+    newInputGroup.classList.add("input-group");
+
+    // Create the number label
+    var numberLabel = document.createElement("span");
+    numberLabel.textContent = (criteriaCount + 1) + "."; // Incremented number
+    numberLabel.classList.add("criteria-number");
+
+    // Create the new input fields  
+    var newCriteriaInput = document.createElement("input");
+    newCriteriaInput.type = "text";
+    newCriteriaInput.name = "criteria[]";
+    newCriteriaInput.placeholder = "Insert Criteria Name";
+    newCriteriaInput.required = true;
+
+    var newScoreInput = document.createElement("input");
+    newScoreInput.type = "number";
+    newScoreInput.name = "scores[]";
+    newScoreInput.placeholder = "Insert %";
+    newScoreInput.min = "0";
+    newScoreInput.max = "100";
+    newScoreInput.step = "1";
+    newScoreInput.required = true;
+
+    // Append elements to the new input group
+    newInputGroup.appendChild(numberLabel);
+    newInputGroup.appendChild(newCriteriaInput);
+    newInputGroup.appendChild(newScoreInput);
+
+    // Append the new input group to the container
+    criteriaContainer.appendChild(newInputGroup);
+
+    // Move buttons below the last added input fields each time
+    var form = document.getElementById("feedbackForm");
+    form.appendChild(document.querySelector(".add-btn"));
+    form.appendChild(document.querySelector(".generate-btn"));
+
+    // Update counter display
+    criteriaCount++;
+    updateCounter();
 }
 
-// Handle "Generate" button click
-document.getElementById('generateFeedback').addEventListener('click', function () {
-    const feedbackOutput = document.getElementById('feedbackOutput');
-    feedbackOutput.textContent = "This is a placeholder for feedback generation.";
-});
+function updateCounter() {
+    document.getElementById("criteriaCounter").textContent = `${criteriaCount}/10`;
+}
+
+

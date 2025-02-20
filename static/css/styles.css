@@ -86,31 +86,56 @@ nav h1 {
   overflow: hidden;
 }
 
-/* Left Pane Styles */
 .left-pane {
   flex: 1;
   padding: 20px;
   border-right: 1px solid #ddd;
   background-color: #f9f9f9;
+  height: 400px; /* Fixed height to enable scrolling */
+  overflow-y: auto; /* Enables vertical scrollbar when content overflows */
+  max-height: 500px; /* Optional: Restrict maximum height */
 }
 
-.left-pane h2 {
-  margin-bottom: 20px;
-  font-size: 20px;
-}
-
+/* Ensure input fields do not overflow */
 .input-group {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+  flex-wrap: wrap; /* Wrap inputs to avoid overflow */
 }
 
 .input-group input {
-  width: 50%;
+  flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+
+
+
+.criteria-number {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* Button and Counter Container */
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Spreads buttons and counter */
+  margin-top: 10px;
+  width: 100%; /* Ensures full width alignment */
+}
+
+/* Counter aligned to the right */
+#criteriaCounter {
+  font-size: 16px;
+  color: #007bff;
+  margin-left: auto; /* Pushes counter to the right */
+  font-weight: bold;
+}
+
 
 /* Button Styles */
 .btn {
@@ -145,7 +170,6 @@ nav h1 {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
 }
 
 /* Left Pane */
@@ -154,6 +178,8 @@ nav h1 {
   padding: 20px;
   border-right: 1px solid #ddd;
   background-color: #f9f9f9;
+  height: 400px;
+  overflow-y: scroll;
 }
 
 .left-pane h2 {
@@ -218,7 +244,7 @@ nav h1 {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  min-height: 100px;
+  min-height: 300px;
 }
 
 /* Responsive Design for Smaller Screens */

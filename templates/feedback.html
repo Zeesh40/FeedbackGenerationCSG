@@ -9,14 +9,19 @@
         <h2>Enter Criteria and Percentages</h2>
         <form id="feedbackForm">
             <div id="criteriaInputs">
-                <!-- Example Criteria Input Group -->
+                <!-- Default Criteria Input Group with Number -->
                 <div class="input-group">
+                    <span class="criteria-number">1.</span> <!-- Default number -->
                     <input type="text" name="criteria[]" placeholder="Insert Criteria Name" required>
-                    <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" required>
+                    <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" step="1" required>
                 </div>
             </div>
-            <button type="button" class="btn add-btn" onclick="addCriteria()">Add +</button>
-            <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
+            <!-- Buttons and Counter in Flex Container -->
+            <div class="button-container">
+                <button type="button" class="btn add-btn" onclick="addCriteria()">Add +</button>
+                <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
+                <span id="criteriaCounter">1/10</span> <!-- Counter moved here -->
+            </div>
         </form>
     </div>
 
@@ -28,4 +33,9 @@
         </div>
     </div>
 </div>
+
+<!-- Include JavaScript file -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 {% endblock %}
