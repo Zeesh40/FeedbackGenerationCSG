@@ -75,6 +75,29 @@ function storeCriteria() {
     console.log("Stored Criteria Data:", criteriaData); // Debugging output
 }
 
+// Function to validate percentage input
+function validatePercentageInput(input) {
+    let value = parseInt(input.value, 10);
+
+    if (isNaN(value) || value < 0 || value > 100) {
+        input.value = ""; // Clear invalid input
+        Swal.fire({
+            title: "Invalid Input!",
+            text: "Please enter a whole number between 0 and 100.",
+            icon: "error"
+        });
+    }
+}
+
+// Attach validation to all number inputs
+document.addEventListener("input", function(event) {
+    if (event.target.matches("input[type='number']")) {
+        validatePercentageInput(event.target);
+    }
+});
+
+
+
 // Function to send criteria data to the backend
 function sendData() {
     storeCriteria(); // Collect latest input data
