@@ -24,7 +24,8 @@ def enhance_sentence(sentence):
     improved_sentence = " ".join(new_sentence)
 
     # Fix spacing by removing extra spaces near punctuation
-    improved_sentence = re.sub(r'\s([,.!?;])', r'\1', improved_sentence)
+    improved_sentence = re.sub(r'\s([,.!?;’])', r'\1', improved_sentence)
+
 
     # Fix spacing between integers and percentage sign (%)
     improved_sentence = re.sub(r'(\d+)\s%', r'\1%', improved_sentence)
