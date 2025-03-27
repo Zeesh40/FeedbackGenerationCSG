@@ -11,16 +11,20 @@
             <div id="criteriaInputs">
                 <!-- Default Criteria Input Group with Number -->
                 <div class="input-group">
-                    <span class="criteria-number">1.</span> <!-- Default number -->
                     <input type="text" name="criteria[]" placeholder="Insert Criteria Name" required>
                     <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" step="1" required>
+                    <select class="justification-dropdown">
+                        <option value="">No Justification</option>
+                    </select>
+                    <button type="button" class="add-justification">+</button>
                 </div>
-            </div>
+                
+            </div>            
             <!-- Buttons and Counter in Flex Container -->
             <div class="button-container">
-                <button type="button" class="btn add-btn" onclick="addCriteria()">Add +</button>
+                <button type="button" class="btn add-btn" onclick="addCriteria()">Add</button>
                 <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
-                <span id="criteriaCounter">1/10</span> <!-- Counter moved here -->
+                <span id="criteriaCounter">1/10</span> 
             </div>
         </form>
     </div>

@@ -1,15 +1,17 @@
 import spacy
 import random
-import re  # Import regex module for fixing spacing issues
+import re  # regex model for spacing issues
 
-nlp = spacy.load("en_core_web_sm")  # Load spacy nlp model
+nlp = spacy.load("en_core_web_sm")  # load spacy nlp model
 
 def enhance_sentence(sentence):
-    
+    """
+    Enhance the sentence by replacing words with synonyms for variety and fixing spacing issues.
+    """
     doc = nlp(sentence)
     new_sentence = []
 
-    # replacing words with synonyms for more variety
+    # replace words with synonyms for variety
     for token in doc:
         word = token.text
         if word.lower() in ["superb", "good", "fantastic", "remarkable"]:
@@ -23,57 +25,59 @@ def enhance_sentence(sentence):
 
     improved_sentence = " ".join(new_sentence)
 
-    # Fix spacing by removing extra spaces near punctuation
+    # removes extra spaces near punctuation
     improved_sentence = re.sub(r'\s([,.!?;’])', r'\1', improved_sentence)
 
-
-    # Fix spacing between integers and percentage sign (%)
+    # fix spacing between integers and percentage sign (%)
     improved_sentence = re.sub(r'(\d+)\s%', r'\1%', improved_sentence)
 
-    # Capitalize first letter properly
+    # capitalize first letter properly
     improved_sentence = improved_sentence[0].upper() + improved_sentence[1:]
 
     return improved_sentence
 
-def generate_feedback(criteria_data):
+def generate_feedback(criteria_list):
+    """
+    Generates structured feedback based on the given criteria list.
+    """
     feedback = []
-    
-    # Classify scores
-    high = [(c.capitalize(), s) for c, s in criteria_data.items() if s >= 70]
-    mid = [(c.capitalize(), s) for c, s in criteria_data.items() if 40 <= s < 70]
-    low = [(c.capitalize(), s) for c, s in criteria_data.items() if s < 40]
 
-    # Majority rule to determine feedback structure
+    # classify scores
+    high = [(entry["criterion"].capitalize(), entry["score"], entry["justification"]) for entry in criteria_list if entry["score"] >= 70]
+    mid = [(entry["criterion"].capitalize(), entry["score"], entry["justification"]) for entry in criteria_list if 40 <= entry["score"] < 70]
+    low = [(entry["criterion"].capitalize(), entry["score"], entry["justification"]) for entry in criteria_list if entry["score"] < 40]
+
+    # majority rule to determine feedback structure
     if len(high) >= len(mid) + len(low):
         sections = [high, mid, low]
     else:
         sections = [low, mid, high]
 
-    # Different feedback templates
+    # feedback templates
     templates = {
         "high": [
             "You did a great job for {criterion}, with a score of {score}%.",
             "You excelled in {criterion} with {score}% as your score.",
-            "Your {criterion} score of {score}% highlights a strong understanding and performance",
-            "Great performance in {criterion}, with a score of {score}%.",
+            "Your {criterion} score of {score}% highlights a strong understanding and performance.",
+            "Great performance in {criterion}, with a score of {score}%."
         ],
         "mid": [
             "Your performance in {criterion} was decent at {score}%, but there seems to be some room for improvement.",
             "A score of {score}% in {criterion} shows a solid grasp, yet there’s potential for growth and development.",
-            "You're doing fairly well in {criterion}, scoring {score}%.",
+            "You're doing fairly well in {criterion}, scoring {score}%."
         ],
         "low": [
             "Your score in {criterion} was {score}%, indicating an area to focus.",
             "Scoring {score}% in {criterion} suggests the need for more attention and practice.",
-            "There is room for improvement in {criterion}, as your score came out as {score}%.",
+            "There is room for improvement in {criterion}, as your score came out as {score}%."
         ]
     }
 
-    # Different connectors
+    # different connectors
     contrastive_connectors = ["However,", "On the other hand,", "That being said,", "Nevertheless,", "Yet,", "Despite this,"]
     additive_connectors = ["Moreover,", "Furthermore,", "Additionally,", "Also,", "Not to mention,", "What's more,"]
 
-    # Shuffle transition words to ensure variety and not have repeated words
+    # shuffle transition words to ensure variety and not have repeated words
     random.shuffle(contrastive_connectors)
     random.shuffle(additive_connectors)
 
@@ -85,33 +89,37 @@ def generate_feedback(criteria_data):
 
         category = "high" if section == high else "mid" if section == mid else "low"
 
-        # Contrastive connector if transitioning to a different category
+        # contrastive connector if transitioning to a different category
         if last_category and last_category != category:
             if contrastive_connectors:
-                # Remove and use first available contrastive connector
                 feedback.append(contrastive_connectors.pop(0))  
             else:
                 random.shuffle(contrastive_connectors)
                 feedback.append(contrastive_connectors.pop(0))
 
-        # Generate feedback
-        for i, (criterion, score) in enumerate(section):
-            # Picks a shuffled sentence
+        # generate feedback
+        for i, (criterion, score, justification) in enumerate(section):
+            # picks a shuffled sentence
             template = templates[category][i % len(templates[category])]  
-            # Use spaCy to refine
+            # use spacy to refine
             improved_sentence = enhance_sentence(template.format(criterion=criterion, score=score))  
+
+            # append justification naturally
+            if justification:
+                improved_sentence += f" {justification}"
+
             feedback.append(improved_sentence)
 
-        # Add additive connector for same section
+            # add additive connector for same section
             if i < len(section) - 1:
                 if additive_connectors:
-                    # Remove and use first available additive connector
                     feedback.append(additive_connectors.pop(0))  
                 else:
                     random.shuffle(additive_connectors)
                     feedback.append(additive_connectors.pop(0))
 
-        # Update last category
+        # update last category
         last_category = category  
 
     return " ".join(feedback)
+

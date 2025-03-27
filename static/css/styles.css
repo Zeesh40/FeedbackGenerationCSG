@@ -97,12 +97,16 @@ nav h1 {
 }
 
 /* Ensure input fields do not overflow */
+/* Add this or update your existing style */
 .input-group {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap; /* Wrap inputs to avoid overflow */
+  flex-wrap: wrap;
+  padding-bottom: 10px; /* Add internal spacing */
+  margin-bottom: 20px;   /* Add external spacing */
+  border-bottom: 1px solid transparent; /* Optional visual guide for debugging */
 }
+
 
 .input-group input {
   flex: 1;
@@ -111,12 +115,143 @@ nav h1 {
   border-radius: 5px;
 }
 
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group select {
+    height: 30px; /* Adjusted from 40px to 35px for a better fit */
+    padding: 5px 10px; /* Keeps text from touching edges */
+    font-size: 12px; /* Consistent font size */
+    border-radius: 4px; /* Slightly rounded edges for better aesthetics */
+    border: 1px solid #ccc; /* Subtle border */
+    vertical-align: middle; /* Aligns text properly */
+}
+
+.input-group input[type="number"] {
+  width: 85px !important; /* Ensures the width is fixed */
+  min-width: 85px; /* Prevents it from expanding */
+  max-width: 85px; /* Prevents it from stretching */
+  flex: 0; /* Stops it from growing due to flexbox */
+  text-align: center; /* Keeps numbers centered */
+  padding: 5px; /* Reduces padding to prevent expanding */
+}
 
 
-.criteria-number {
+/* Ensure criteria and input text match */
+.criteria-name {
+  font-size: 12px; /* Match the input font size */
+}
+
+/* Optional: Improve layout consistency */
+.criteria-row {
+  display: flex;
+  align-items: center; /* Ensures inputs and labels align properly */
+}
+
+
+/* Make all elements in the input group align properly */
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between elements */
+}
+
+/* Style the dropdown to look like a button */
+.justification-dropdown {
+  appearance: none; /* Removes default styles */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  background-color: #7066e0; /* Blue button */
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 180px;
+  text-align: center;
   font-weight: bold;
-  margin-right: 10px;
+}
+
+/* Create a dropdown arrow */
+.justification-dropdown::after {
+  content: " ▼";
+  font-size: 12px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+}
+
+/* Change background on hover */
+.justification-dropdown:hover {
+  background-color: #8880f0; 
+}
+
+/* Style the dropdown options */
+.justification-dropdown option {
+  background: white;
+  color: black;
+  padding: 10px;
+}
+
+/* Hover effect for options */
+.justification-dropdown option:hover {
+  background: #f1f1f1;
+}
+
+/* Target the justification add button (+) */
+.input-group .add-justification {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  padding: 2px;
+  border: none;
+  border-radius: 50%;
+  background-color: #7066e0;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effect for justification add button */
+.input-group .add-justification:hover {
+  background-color: #8880f0;
+}
+
+/* Ensure all inputs in a row are aligned properly */
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+}
+
+
+/* Ensure the popup doesn't stretch input fields too far */
+.wide-popup {
+  width: 700px !important; /* Slightly reduce width */
+  padding: 20px;
+}
+
+/* Improve input field sizing */
+.custom-input {
+  width: 90% !important; /* Reduce width slightly for better spacing */
+  height: 40px !important;
   font-size: 16px;
+  margin: 5px auto; /* Center the input fields */
+  display: block; /* Ensure inputs don't stretch to full width */
+}
+
+/* Ensure SweetAlert input fields look consistent */
+.swal2-input {
+  box-sizing: border-box;
+  padding: 8px;
 }
 
 /* Button and Counter Container */
@@ -131,34 +266,12 @@ nav h1 {
 /* Counter aligned to the right */
 #criteriaCounter {
   font-size: 16px;
-  color: #007bff;
+  color: #7066e0;
   margin-left: auto; /* Pushes counter to the right */
   font-weight: bold;
 }
 
 
-/* Button Styles */
-.btn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.add-btn {
-  background-color: #cce7ff;
-  color: #007bff;
-}
-
-.generate-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
 
 /* Container for Two Panes */
 .container {
@@ -210,12 +323,13 @@ nav h1 {
 }
 
 .add-btn {
-  background-color: #cce7ff;
-  color: #007bff;
+  background-color: #7066e0;
+  color: #fff;
+  margin-right: 10px; 
 }
 
 .generate-btn {
-  background-color: #007bff;
+  background-color: #7066e0;
   color: #fff;
 }
 
@@ -223,7 +337,6 @@ nav h1 {
   opacity: 0.9;
 }
 
-/* Right Pane */
 .right-pane {
   flex: 1;
   padding: 20px;
@@ -360,4 +473,16 @@ input:nth-of-type(5) {
 }
 input:nth-of-type(5):checked ~ main#carousel {
   --position: 5;
+}
+
+/* Reduce score input width */
+input[type="number"].small-input {
+  width: 70px;
+}
+
+/* Style the justification dropdown */
+select {
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
 }

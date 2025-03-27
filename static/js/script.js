@@ -1,6 +1,55 @@
 let criteriaCount = 1; // Default criteria already present
 const maxCriteria = 10; // Limit of 10
-let criteriaData = {};  // Dictionary to store criteria name and percentage
+let criteriaList = [];  // Array to store criteria objects
+let savedJustifications = []; // Store user-added justifications
+
+
+function attachJustificationEventListeners() {
+    document.querySelectorAll(".add-justification").forEach((button) => {
+        button.removeEventListener("click", addJustificationHandler);
+        button.addEventListener("click", addJustificationHandler);
+    });
+}
+
+// Justification Handler Function
+// Justification Handler Function
+function addJustificationHandler(event) {
+    let justificationDropdown = event.target.previousElementSibling; // Get the associated dropdown
+
+    Swal.fire({
+        title: "Add a Justification",
+        html: `
+            <input id="justificationTitle" class="swal2-input custom-input" placeholder="Enter title e.g. 'Not Enough Work'">
+            <input id="justificationText" class="swal2-input custom-input" placeholder="Enter justification e.g. 'You haven't provided enough information.'">
+        `,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        customClass: {
+            popup: 'wide-popup',
+        },
+        preConfirm: () => {
+            let title = document.getElementById("justificationTitle").value.trim();
+            let text = document.getElementById("justificationText").value.trim();
+    
+            if (!title || !text) {
+                Swal.showValidationMessage("Both fields are required!");
+                return false;
+            }
+            return { title, text };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let { title, text } = result.value;
+
+            // Store the justification data in the dropdown's dataset
+            let newOption = document.createElement("option");
+            newOption.value = text; // Store justification text as value
+            newOption.textContent = title; // Display title in dropdown
+            justificationDropdown.appendChild(newOption);
+        }
+    });
+}
+
 
 // Function to add more criteria input fields dynamically
 function addCriteria() {
@@ -10,20 +59,14 @@ function addCriteria() {
             text: "You have reached the maximum number of criteria that can be added.",
             icon: "warning"
         });
-        return; // Stop execution if the limit is reached
+        return;
     }
 
     let criteriaContainer = document.getElementById("criteriaInputs");
-
     let newInputGroup = document.createElement("div");
     newInputGroup.classList.add("input-group");
 
-    // Create the number label
-    let numberLabel = document.createElement("span");
-    numberLabel.textContent = (criteriaCount + 1) + ".";
-    numberLabel.classList.add("criteria-number");
 
-    // Create the new input fields
     let newCriteriaInput = document.createElement("input");
     newCriteriaInput.type = "text";
     newCriteriaInput.name = "criteria[]";
@@ -39,17 +82,39 @@ function addCriteria() {
     newScoreInput.step = "1";
     newScoreInput.required = true;
 
-    // Append elements to the new input group
-    newInputGroup.appendChild(numberLabel);
+    let justificationDropdown = document.createElement("select");
+    justificationDropdown.classList.add("justification-dropdown");
+
+    let defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "No Justification";
+    justificationDropdown.appendChild(defaultOption);
+
+    savedJustifications.forEach(justification => {
+        let option = document.createElement("option");
+        option.value = justification;
+        option.textContent = justification;
+        justificationDropdown.appendChild(option);
+    });
+
+    let addJustificationBtn = document.createElement("button");
+    addJustificationBtn.textContent = "+";
+    addJustificationBtn.type = "button";
+    addJustificationBtn.classList.add("add-justification");
+
+    // Append elements
     newInputGroup.appendChild(newCriteriaInput);
     newInputGroup.appendChild(newScoreInput);
+    newInputGroup.appendChild(justificationDropdown);
+    newInputGroup.appendChild(addJustificationBtn);
 
-    // Append the new input group to the container
     criteriaContainer.appendChild(newInputGroup);
 
-    // Update counter display
     criteriaCount++;
     updateCounter();
+
+    // Attach Justification Event Listeners to all buttons (Including the First One)
+    attachJustificationEventListeners();
 }
 
 // Function to update the counter display
@@ -57,23 +122,26 @@ function updateCounter() {
     document.getElementById("criteriaCounter").textContent = `${criteriaCount}/10`;
 }
 
-// Function to store criteria inputs in a dictionary
+// Function to store criteria inputs in a structured way
 function storeCriteria() {
     let inputs = document.querySelectorAll("#criteriaInputs .input-group");
 
-    criteriaData = {}; // Reset dictionary before storing new data
+    criteriaList = []; // Reset before storing new data
 
     inputs.forEach(inputGroup => {
         let criteriaName = inputGroup.querySelector("input[type='text']").value.trim();
         let percentage = parseFloat(inputGroup.querySelector("input[type='number']").value);
+        let justificationDropdown = inputGroup.querySelector(".justification-dropdown");
+        let justification = justificationDropdown.value; // Get selected justification text
 
         if (criteriaName && !isNaN(percentage)) {
-            criteriaData[criteriaName] = percentage;
+            criteriaList.push({ "criterion": criteriaName, "score": percentage, "justification": justification });
         }
     });
 
-    console.log("Stored Criteria Data:", criteriaData); // Debugging output
+    console.log("Stored Criteria Data:", criteriaList); // Debugging output
 }
+
 
 // Function to validate percentage input
 function validatePercentageInput(input) {
@@ -96,13 +164,11 @@ document.addEventListener("input", function(event) {
     }
 });
 
-
-
 // Function to send criteria data to the backend
 function sendData() {
     storeCriteria(); // Collect latest input data
 
-    if (Object.keys(criteriaData).length === 0) {
+    if (criteriaList.length === 0) {
         Swal.fire({
             title: "No Data!",
             text: "Please enter at least one valid criteria before generating feedback.",
@@ -114,7 +180,7 @@ function sendData() {
     fetch('/process_feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(criteriaData)
+        body: JSON.stringify({ "criteria": criteriaList })
     })
     .then(response => response.json())
     .then(data => {
@@ -132,3 +198,4 @@ function sendData() {
 
 // Attach event listener to the "Generate" button
 document.getElementById("generateFeedback").addEventListener("click", sendData);
+document.addEventListener("DOMContentLoaded", attachJustificationEventListeners);

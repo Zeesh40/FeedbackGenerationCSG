@@ -14,15 +14,15 @@ def home():
 def feedback():
     return render_template('feedback.html')
 
-# New route to process feedback input
+# Route to process feedback input
 @app.route('/process_feedback', methods=['POST'])
 def process_feedback():
-    data = request.json  # Receive JSON dictionary from frontend
+    data = request.json  # Receive JSON from frontend
 
-    if not data:
+    if not data or "criteria" not in data:
         return jsonify({"feedback": "No valid criteria provided."})  # Handle empty input
 
-    feedback = generate_feedback(data)  # Generate structured feedback
+    feedback = generate_feedback(data["criteria"])  # Generate structured feedback
     return jsonify({"feedback": feedback})  # Return response as JSON
 
 if __name__ == '__main__':
