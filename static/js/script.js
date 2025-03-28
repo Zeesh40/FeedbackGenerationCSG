@@ -66,7 +66,6 @@ function addCriteria() {
     let newInputGroup = document.createElement("div");
     newInputGroup.classList.add("input-group");
 
-
     let newCriteriaInput = document.createElement("input");
     newCriteriaInput.type = "text";
     newCriteriaInput.name = "criteria[]";
@@ -102,20 +101,52 @@ function addCriteria() {
     addJustificationBtn.type = "button";
     addJustificationBtn.classList.add("add-justification");
 
+    // Only create a delete button for added rows
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "×";
+    deleteBtn.type = "button";
+    deleteBtn.classList.add("remove-criteria");
+
+    deleteBtn.addEventListener("click", () => {
+        Swal.fire({
+            title: "Remove this criterion?",
+            text: "This cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, remove it",
+            cancelButtonText: "Cancel",
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                newInputGroup.remove();
+                criteriaCount--;
+                updateCounter();
+                Swal.fire({
+                    title: "Removed!",
+                    text: "The criterion has been deleted.",
+                    icon: "success",
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+            }
+        });
+    });
+
+
+
     // Append elements
     newInputGroup.appendChild(newCriteriaInput);
     newInputGroup.appendChild(newScoreInput);
     newInputGroup.appendChild(justificationDropdown);
     newInputGroup.appendChild(addJustificationBtn);
+    newInputGroup.appendChild(deleteBtn); // Only new rows get this
 
     criteriaContainer.appendChild(newInputGroup);
-
     criteriaCount++;
     updateCounter();
-
-    // Attach Justification Event Listeners to all buttons (Including the First One)
     attachJustificationEventListeners();
 }
+
 
 // Function to update the counter display
 function updateCounter() {

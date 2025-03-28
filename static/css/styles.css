@@ -96,6 +96,21 @@ nav h1 {
   max-height: 500px; /* Optional: Restrict maximum height */
 }
 
+
+/* Right Pane */
+.right-pane {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.right-pane h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
 /* Ensure input fields do not overflow */
 /* Add this or update your existing style */
 .input-group {
@@ -222,6 +237,35 @@ nav h1 {
 .input-group .add-justification:hover {
   background-color: #8880f0;
 }
+
+.remove-criteria {
+  background-color: #7066e0;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* Hover effect for delete button */
+.input-group .remove-criteria:hover {
+  background-color: #8880f0;
+}
+
+.spacer {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin-left: 5px;
+}
+
 
 /* Ensure all inputs in a row are aligned properly */
 .input-group {
@@ -486,3 +530,4 @@ select {
   border-radius: 5px;
   font-size: 14px;
 }
+
