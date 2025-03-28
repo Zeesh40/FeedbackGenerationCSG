@@ -208,10 +208,16 @@ function sendData() {
         return;
     }
 
+    // Get selected feedback order
+    const order = document.getElementById("orderSelect").value;
+
     fetch('/process_feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "criteria": criteriaList })
+        body: JSON.stringify({ 
+            "criteria": criteriaList,
+            "order": order
+        })
     })
     .then(response => response.json())
     .then(data => {
@@ -226,6 +232,7 @@ function sendData() {
         });
     });
 }
+
 
 // Attach event listener to the "Generate" button
 document.getElementById("generateFeedback").addEventListener("click", sendData);

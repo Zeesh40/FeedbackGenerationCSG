@@ -20,7 +20,16 @@
                     <span class="spacer"></span> <!-- Fake 'X' to preserve layout -->
                 </div>                               
             </div>            
-            <!-- Buttons and Counter in Flex Container -->
+            <!-- Feedback Order Dropdown -->
+            <div class="feedback-order-container">
+                <label for="orderSelect">Feedback Order:</label>
+                <select id="orderSelect" name="order">
+                  <option value="adaptive">Adaptive</option>
+                  <option value="high-mid-low">High to Low</option>
+                  <option value="low-mid-high">Low to High</option>
+                </select>
+              </div>                      
+            <!-- Buttons and Counter -->
             <div class="button-container">
                 <button type="button" class="btn add-btn" onclick="addCriteria()">Add</button>
                 <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>

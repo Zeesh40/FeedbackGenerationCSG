@@ -19,29 +19,19 @@ def enhance_sentence(sentence):
         new_sentence.append(word)
 
     improved_sentence = " ".join(new_sentence)
-
-    # Fix spacing near punctuation
     improved_sentence = re.sub(r'\s([,.!?;’])', r'\1', improved_sentence)
     improved_sentence = re.sub(r'(\d+)\s%', r'\1%', improved_sentence)
     improved_sentence = improved_sentence[0].upper() + improved_sentence[1:]
-
-    # Contraction fix
     improved_sentence = re.sub(r"\b([A-Za-z]+)\s+'(re|ve|ll|d|m|s|t)\b", r"\1'\2", improved_sentence)
-
-    # Common phrase cleanup
     improved_sentence = re.sub(r"\b(well)\s+(detailed)\b", r"\1-\2", improved_sentence)
 
     return improved_sentence
 
 
-def generate_feedback(criteria_data):
-    feedback = []
-
-    # Starters for justification
+def generate_feedback(criteria_data, order="adaptive"):
     starters = ["In particular", "Specifically", "For instance", "To illustrate", "Notably"]
     random.shuffle(starters)
 
-    # Feedback templates
     templates = {
         "high": [
             "You did a great job for {criterion}, with a score of {score}%.",
@@ -64,7 +54,6 @@ def generate_feedback(criteria_data):
     for cat in templates:
         random.shuffle(templates[cat])
 
-    # Transition words
     major_contrast = ["However,", "On the other hand,", "Despite this,", "Nevertheless,"]
     mild_contrast = ["That being said,", "Even so,", "Still,", "At the same time,"]
     additive_connectors = ["Moreover,", "Furthermore,", "Additionally,", "Also,", "Not to mention,", "What's more,"]
@@ -73,19 +62,19 @@ def generate_feedback(criteria_data):
     random.shuffle(mild_contrast)
     random.shuffle(additive_connectors)
 
-    # Grouping criteria
     high = [(c["criterion"].capitalize(), c["score"]) for c in criteria_data if c["score"] >= 70]
     mid = [(c["criterion"].capitalize(), c["score"]) for c in criteria_data if 40 <= c["score"] < 70]
     low = [(c["criterion"].capitalize(), c["score"]) for c in criteria_data if c["score"] < 40]
 
-    # Average-based ordering
     all_scores = [c["score"] for c in criteria_data]
     average_score = sum(all_scores) / len(all_scores)
 
-    if average_score >= 50:
+    if order == "low-mid-high":
+        sections = [low, mid, high]
+    elif order == "high-mid-low":
         sections = [high, mid, low]
     else:
-        sections = [low, mid, high]
+        sections = [high, mid, low] if average_score >= 50 else [low, mid, high]
 
     for section in sections:
         random.shuffle(section)
@@ -103,7 +92,12 @@ def generate_feedback(criteria_data):
         if not section:
             continue
 
-        category = "high" if section == high else "mid" if section == mid else "low"
+        if set(section) == set(high):
+            category = "high"
+        elif set(section) == set(mid):
+            category = "mid"
+        else:
+            category = "low"
 
         if last_category and last_category != category:
             contrast_type = get_contrast_type(last_category, category)
@@ -140,26 +134,31 @@ def generate_feedback(criteria_data):
 
         last_category = category
 
-    # Group into paragraphs
-    improvement_sentences = []
-    strength_sentences = []
+    # Separate sentences into strength/improvement groups
+    improvement_sentences = [s for cat, s in all_sentences if cat in ["low", "mid"]]
+    strength_sentences = [s for cat, s in all_sentences if cat == "high"]
 
-    for idx, (cat, sentence) in enumerate(all_sentences):
-        if cat in ["low", "mid"]:
-            improvement_sentences.append(sentence)
-        else:
-            strength_sentences.append(sentence)
-
-    # Add "Lastly," to final strength sentence
-    if strength_sentences:
-        last = strength_sentences[-1]
-        if not last.strip().startswith(("Lastly", "Finally")):
-            strength_sentences[-1] = f"Lastly, {last[0].lower() + last[1:]}" if last[0].isupper() else f"Lastly, {last}"
-
+    # Group paragraphs based on selected order
     paragraphs = []
-    if improvement_sentences:
-        paragraphs.append(" ".join(improvement_sentences))
-    if strength_sentences:
-        paragraphs.append(" ".join(strength_sentences))
+    if order == "low-mid-high" or (order == "adaptive" and average_score < 50):
+        if improvement_sentences:
+            paragraphs.append(" ".join(improvement_sentences))
+        if strength_sentences:
+            paragraphs.append(" ".join(strength_sentences))
+    else:
+        if strength_sentences:
+            paragraphs.append(" ".join(strength_sentences))
+        if improvement_sentences:
+            paragraphs.append(" ".join(improvement_sentences))
+
+    # Add "Lastly," to the last sentence in the final paragraph
+    if paragraphs:
+        last_paragraph = paragraphs[-1]
+        sentences = last_paragraph.strip().split(". ")
+        if sentences:
+            last_sentence = sentences[-1]
+            if not last_sentence.strip().startswith(("Lastly", "Finally")):
+                sentences[-1] = f"Lastly, {last_sentence[0].lower() + last_sentence[1:]}" if last_sentence[0].isupper() else f"Lastly, {last_sentence}"
+            paragraphs[-1] = ". ".join(sentences)
 
     return "\n\n".join(paragraphs)
