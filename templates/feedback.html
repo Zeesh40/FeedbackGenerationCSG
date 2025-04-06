@@ -4,12 +4,11 @@
 
 {% block content %}
 <div class="container">
-    <!-- Left Pane: Input Section -->
+    <!-- Left Pane -->
     <div class="left-pane">
         <h2>Enter Criteria and Percentages</h2>
         <form id="feedbackForm">
             <div id="criteriaInputs">
-                <!-- Default Criteria Input Group with Number -->
                 <div class="input-group">
                     <input type="text" name="criteria[]" placeholder="Insert Criteria Name" required>
                     <input type="number" name="scores[]" placeholder="Insert %" min="0" max="100" step="1" required>
@@ -17,37 +16,40 @@
                         <option value="">No Justification</option>
                     </select>
                     <button type="button" class="add-justification">+</button>
-                    <span class="spacer"></span> <!-- Fake 'X' to preserve layout -->
-                </div>                               
-            </div>            
-            <!-- Feedback Order Dropdown -->
+                    <span class="spacer"></span>
+                </div>
+            </div>
+
             <div class="feedback-order-container">
                 <label for="orderSelect">Feedback Order:</label>
                 <select id="orderSelect" name="order">
-                  <option value="adaptive">Adaptive</option>
-                  <option value="high-mid-low">High to Low</option>
-                  <option value="low-mid-high">Low to High</option>
+                    <option value="adaptive">Adaptive</option>
+                    <option value="high-mid-low">High to Low</option>
+                    <option value="low-mid-high">Low to High</option>
                 </select>
-              </div>                      
-            <!-- Buttons and Counter -->
+            </div>
+
             <div class="button-container">
                 <button type="button" class="btn add-btn" onclick="addCriteria()">Add</button>
                 <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
-                <span id="criteriaCounter">1/10</span> 
+                <span id="criteriaCounter">1/10</span>
             </div>
         </form>
     </div>
 
     <!-- Right Pane: Output Section -->
     <div class="right-pane">
-        <h2>Generated Feedback</h2>
-        <div id="feedbackOutput">
-            <!-- Feedback will appear here -->
-        </div>
+        <div class="feedback-header">
+            <h2>Generated Feedback</h2>
+            <button id="copyFeedback" class="btn copy-btn" title="Copy to clipboard">
+                <i class="fas fa-clipboard"></i>
+              </button>                  
+        </div>          
+        <div id="feedbackOutput" class="feedback-box"></div>
     </div>
 </div>
 
-<!-- Include JavaScript file -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 

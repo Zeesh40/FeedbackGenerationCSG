@@ -30,7 +30,7 @@ nav {
 
 nav h1 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 .nav-wrapper ul {
@@ -47,8 +47,8 @@ nav h1 {
 .nav-wrapper ul li a {
   text-decoration: none; /* Removes underline */
   color: white; /* White link text */
-  font-size: 1em;
-  padding: 5px 10px; /* Adds padding around the link */
+  font-size: 1.1em;
+  padding: 10px 10px; /* Adds padding around the link */
   border-radius: 5px; /* Slightly rounded corners */
 }
 
@@ -388,7 +388,7 @@ select:focus {
 
 .btn {
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 8px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -589,5 +589,36 @@ select {
 #orderSelect:hover {
   background-color: #8880f0;
 }
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* space between title and button */
+  margin-bottom: 10px;
+}
+
+.feedback-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.copy-btn {
+  background-color: #7066e0;
+  color: #fff;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  height: 34px;
+  line-height: 1;
+  margin-top: -2px; /* ✅ Moves it up slightly */
+}
+
+
+
+
 
 

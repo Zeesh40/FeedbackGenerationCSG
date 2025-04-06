@@ -231,6 +231,40 @@ function sendData() {
             icon: "error"
         });
     });
+
+    document.getElementById("copyFeedback").addEventListener("click", function () {
+        const feedbackText = document.getElementById("feedbackOutput").innerText;
+    
+        if (!feedbackText.trim()) {
+            Swal.fire({
+                icon: "info",
+                title: "Nothing to copy",
+                text: "Please generate some feedback first.",
+            });
+            return;
+        }
+    
+        navigator.clipboard.writeText(feedbackText)
+            .then(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Copied!",
+                    text: "The feedback has been copied to your clipboard.",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            })
+            .catch(err => {
+                console.error("Failed to copy:", err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops!",
+                    text: "Failed to copy feedback.",
+                });
+            });
+    });
+    
+
 }
 
 
