@@ -1,30 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block header %}
-
-{% endblock %}
+{% block title %}Home - Feedback Generator{% endblock %}
 
 {% block content %}
+<section class="home-hero">
+  <h2>Welcome to the Feedback Generator</h2>
+  <p>
+    This tool helps you generate high-quality, personalized feedback using criteria and percentages — fast, fair, and insightful.
+  </p>
+  <a href="{{ url_for('feedback') }}" class="primary-btn">Get Started</a>
+</section>
 
-<homebody>
-  <input type="radio" name="position" checked />
-  <input type="radio" name="position" />
-  <input type="radio" name="position" />
-  <input type="radio" name="position" />
-  <input type="radio" name="position" />
-  <main id="carousel">
-    <div class="item">
-      <h2>Lorem Ipsum</h2>
-    </div>
-    <div class="item">
-      <h2>Lorem Ipsum</h2>
-    </div>
-    <div class="item">
-      <h2>Lorem Ipsum</h2>
-    </div>
-    <div class="item"></div>
-    <div class="item"></div>
-    <main>
-</homebody>
+<section class="home-section">
+  <h2>How It Works</h2>
+  <ol>
+    <li>Input criteria names and their associated percentages.</li>
+    <li>Optionally add justifications for deeper feedback.</li>
+    <li>Click “Generate” and receive instant tailored comments.</li>
+  </ol>
+</section>
 
+<section class="home-section">
+  <h2>Why It Matters</h2>
+  <p>
+    High-quality feedback boosts learning, but writing it manually takes time. This system ensures consistency, saves time, and provides adaptive, meaningful comments to every student.
+  </p>
+</section>
 {% endblock %}
