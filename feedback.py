@@ -152,13 +152,43 @@ def generate_feedback(criteria_data, order="adaptive"):
             paragraphs.append(" ".join(improvement_sentences))
 
     # Add "Lastly," to the last sentence in the final paragraph
+        # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justifications)
+        # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justification starters)
     if paragraphs:
-        last_paragraph = paragraphs[-1]
-        sentences = last_paragraph.strip().split(". ")
-        if sentences:
-            last_sentence = sentences[-1]
-            if not last_sentence.strip().startswith(("Lastly", "Finally")):
-                sentences[-1] = f"Lastly, {last_sentence[0].lower() + last_sentence[1:]}" if last_sentence[0].isupper() else f"Lastly, {last_sentence}"
-            paragraphs[-1] = ". ".join(sentences)
+        last_paragraph = paragraphs[-1].strip()
+        sentences = re.split(r'(?<=[.!?]) +', last_paragraph)
+
+        justification_starters = (
+            "In particular", "Specifically", "Notably", "For instance"
+        )
+
+        # Find the last sentence that isn't a justification
+        for i in range(len(sentences) - 1, -1, -1):
+            sentence = sentences[i].strip()
+
+            # Skip empty sentences or those starting with justification phrases
+            if not sentence or sentence.startswith(justification_starters):
+                continue
+
+            # Only add if it doesn't already start with 'Lastly' or 'Finally'
+            if not sentence.startswith(("Lastly", "Finally")):
+                # Remove any existing connector
+                sentence = re.sub(
+                    r"^(However,|On the other hand,|Despite this,|Nevertheless,|That being said,|Even so,|Still,|At the same time,)\s*",
+                    "",
+                    sentence,
+                    flags=re.IGNORECASE
+                )
+
+                # Add the 'Lastly' or 'Finally'
+                intro = random.choice(["Lastly,", "Finally,"])
+                sentence = f"{intro} {sentence[0].lower() + sentence[1:]}" if sentence[0].isupper() else f"{intro} {sentence}"
+                sentences[i] = sentence
+            break
+
+        # Rebuild the paragraph
+        paragraphs[-1] = " ".join(sentences)
 
     return "\n\n".join(paragraphs)
+
+
