@@ -29,32 +29,46 @@ def enhance_sentence(sentence):
 
 
 def generate_feedback(criteria_data, order="adaptive"):
-    starters = ["In particular", "Specifically", "For instance", "To illustrate", "Notably"]
-    random.shuffle(starters)
+    standalone_starters = [
+        "In particular", "Specifically", "Notably", "For instance", "To illustrate"
+    ]
+    flowing_starters = [
+        "This is evident in how", "This was demonstrated by how", "This was reflected in how",
+        "As highlighted by how"
+    ]
+
 
     templates = {
         "high": [
+            "You demonstrated superb abilities in {criterion}, earning {score}%.",
+            "An outstanding score of {score}% in {criterion} highlights your remarkable grasp of the material.",
             "You did a great job for {criterion}, with a score of {score}%.",
             "You excelled in {criterion} with {score}% as your score.",
             "Your {criterion} score of {score}% highlights a strong understanding and performance.",
-            "Great performance in {criterion}, with a score of {score}%."
+            "Great performance in {criterion}, with a score of {score}%.",
         ],
         "mid": [
+            "In {criterion}, your score of {score}% demonstrates competence, though refining this further could benefit you.",
+            "{criterion} was handled fairly well with a {score}% score, yet there’s definitely space to enhance your performance.",
             "Your performance in {criterion} was decent at {score}%, but there seems to be some room for improvement.",
             "A score of {score}% in {criterion} shows a solid grasp, yet there’s potential for growth and development.",
-            "You're doing fairly well in {criterion}, scoring {score}%."
+            "You're doing fairly well in {criterion}, scoring {score}%.",
+            "A score of {score}% in {criterion} shows you’re on the right track, but there’s clear potential to improve.",
+            "Your {criterion} result of {score}% reflects solid effort, but greater consistency would strengthen your overall performance.",
         ],
         "low": [
+            "Your {criterion} score of {score}% shows that this is an area worth strengthening.",
+            "A score of {score}% in {criterion} reflects a need to further develop your capabilities in this area.",
             "Your score in {criterion} was {score}%, indicating an area to focus.",
             "Scoring {score}% in {criterion} suggests the need for more attention and practice.",
-            "There is room for improvement in {criterion}, as your score came out as {score}%."
+            "There is room for improvement in {criterion}, as your score came out as {score}%.",
         ]
     }
 
     for cat in templates:
         random.shuffle(templates[cat])
 
-    major_contrast = ["However,", "On the other hand,", "Despite this,", "Nevertheless,"]
+    major_contrast = ["However,", "On the other hand,", "Despite this,", "Nevertheless,", "Alternatively,"]
     mild_contrast = ["That being said,", "Even so,", "Still,", "At the same time,"]
     additive_connectors = ["Moreover,", "Furthermore,", "Additionally,", "Also,", "Not to mention,", "What's more,"]
 
@@ -121,10 +135,14 @@ def generate_feedback(criteria_data, order="adaptive"):
             )
 
             if justification_text:
-                starter = starters.pop(0).capitalize() if starters else "In particular"
+                if random.random() < 0.5:
+                    starter = random.choice(standalone_starters) + ","
+                else:
+                    starter = random.choice(flowing_starters)
                 justification_text = justification_text.strip(" .!?")
-                justification_sentence = f"{starter}, {justification_text}."
+                justification_sentence = f"{starter} {justification_text}."
                 enhanced += f" {justification_sentence}"
+
 
             all_sentences.append((category, enhanced))
 
