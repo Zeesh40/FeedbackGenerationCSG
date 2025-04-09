@@ -12,7 +12,6 @@ function attachJustificationEventListeners() {
 }
 
 // Justification Handler Function
-// Justification Handler Function
 function addJustificationHandler(event) {
     let justificationDropdown = event.target.previousElementSibling; // Get the associated dropdown
 
@@ -234,16 +233,7 @@ function sendData() {
 
     document.getElementById("copyFeedback").addEventListener("click", function () {
         const feedbackText = document.getElementById("feedbackOutput").innerText;
-    
-        if (!feedbackText.trim()) {
-            Swal.fire({
-                icon: "info",
-                title: "Nothing to copy",
-                text: "Please generate some feedback first.",
-            });
-            return;
-        }
-    
+
         navigator.clipboard.writeText(feedbackText)
             .then(() => {
                 Swal.fire({

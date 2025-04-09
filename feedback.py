@@ -176,36 +176,34 @@ def generate_feedback(criteria_data, order="adaptive"):
         last_paragraph = paragraphs[-1].strip()
         sentences = re.split(r'(?<=[.!?]) +', last_paragraph)
 
-        justification_starters = (
-            "In particular", "Specifically", "Notably", "For instance"
-        )
+        # Filter only actual feedback (not connectors or justifications)
+        real_sentences = [
+            s for s in sentences
+            if not s.strip().startswith(
+                tuple(["In particular", "Specifically", "Notably", "To illustrate", "For instance", "Moreover", "Furthermore", "Additionally", "Also", "What's more"])
+            ) and not s.strip().startswith(("Lastly", "Finally"))
+        ]
 
-        # Find the last sentence that isn't a justification
-        for i in range(len(sentences) - 1, -1, -1):
-            sentence = sentences[i].strip()
+        if len(real_sentences) > 1:
+            # Loop backwards to find the last actual feedback sentence
+            for i in range(len(sentences) - 1, -1, -1):
+                sentence = sentences[i].strip()
+                if sentence and sentence not in real_sentences:
+                    continue
+                if not sentence.startswith(("Lastly", "Finally")):
+                    sentence = re.sub(
+                        r"^(However,|On the other hand,|Despite this,|Nevertheless,|That being said,|Even so,|Still,|At the same time,)\s*",
+                        "",
+                        sentence,
+                        flags=re.IGNORECASE
+                    )
+                    intro = random.choice(["Lastly,", "Finally,"])
+                    sentence = f"{intro} {sentence[0].lower() + sentence[1:]}" if sentence[0].isupper() else f"{intro} {sentence}"
+                    sentences[i] = sentence
+                    break
 
-            # Skip empty sentences or those starting with justification phrases
-            if not sentence or sentence.startswith(justification_starters):
-                continue
+            paragraphs[-1] = " ".join(sentences)
 
-            # Only add if it doesn't already start with 'Lastly' or 'Finally'
-            if not sentence.startswith(("Lastly", "Finally")):
-                # Remove any existing connector
-                sentence = re.sub(
-                    r"^(However,|On the other hand,|Despite this,|Nevertheless,|That being said,|Even so,|Still,|At the same time,)\s*",
-                    "",
-                    sentence,
-                    flags=re.IGNORECASE
-                )
-
-                # Add the 'Lastly' or 'Finally'
-                intro = random.choice(["Lastly,", "Finally,"])
-                sentence = f"{intro} {sentence[0].lower() + sentence[1:]}" if sentence[0].isupper() else f"{intro} {sentence}"
-                sentences[i] = sentence
-            break
-
-        # Rebuild the paragraph
-        paragraphs[-1] = " ".join(sentences)
 
     return "\n\n".join(paragraphs)
 
