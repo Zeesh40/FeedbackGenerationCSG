@@ -140,6 +140,7 @@ def generate_feedback(criteria_data, order="adaptive"):
                 else:
                     starter = random.choice(flowing_starters)
                 justification_text = justification_text.strip(" .!?")
+                justification_text = justification_text[0].lower() + justification_text[1:] if justification_text else ""
                 justification_sentence = f"{starter} {justification_text}."
                 enhanced += f" {justification_sentence}"
 
@@ -169,9 +170,8 @@ def generate_feedback(criteria_data, order="adaptive"):
         if improvement_sentences:
             paragraphs.append(" ".join(improvement_sentences))
 
-    # Add "Lastly," to the last sentence in the final paragraph
-        # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justifications)
-        # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justification starters)
+
+    # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justification starters)
     if paragraphs:
         last_paragraph = paragraphs[-1].strip()
         sentences = re.split(r'(?<=[.!?]) +', last_paragraph)
