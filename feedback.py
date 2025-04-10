@@ -148,8 +148,8 @@ def generate_feedback(criteria_data, order="adaptive"):
             all_sentences.append((category, enhanced))
 
             if i < len(section) - 1 and random.random() > 0.5:
-                connector = additive_connectors.pop(0) if additive_connectors else "Also,"
-                all_sentences.append((category, connector))
+                connector_buffer = additive_connectors.pop(0) if additive_connectors else "Also,"
+
 
         last_category = category
 
