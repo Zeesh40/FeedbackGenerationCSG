@@ -1,8 +1,8 @@
-let criteriaCount = 1; // Default criteria already present
-const maxCriteria = 10; // Limit of 10
-let criteriaList = [];  // Array to store criteria objects
-let savedJustifications = []; // Store user-added justifications
-
+// initialize lists and default values
+let criteriaCount = 1; 
+const maxCriteria = 10; 
+let criteriaList = [];  
+let savedJustifications = []; 
 
 function attachJustificationEventListeners() {
     document.querySelectorAll(".add-justification").forEach((button) => {
@@ -42,13 +42,12 @@ function addJustificationHandler(event) {
 
             // Store the justification data in the dropdown's dataset
             let newOption = document.createElement("option");
-            newOption.value = text; // Store justification text as value
-            newOption.textContent = title; // Display title in dropdown
+            newOption.value = text; 
+            newOption.textContent = title; 
             justificationDropdown.appendChild(newOption);
         }
     });
 }
-
 
 // Function to add more criteria input fields dynamically
 function addCriteria() {
@@ -146,7 +145,6 @@ function addCriteria() {
     attachJustificationEventListeners();
 }
 
-
 // Function to update the counter display
 function updateCounter() {
     document.getElementById("criteriaCounter").textContent = `${criteriaCount}/10`;
@@ -162,23 +160,22 @@ function storeCriteria() {
         let criteriaName = inputGroup.querySelector("input[type='text']").value.trim();
         let percentage = parseFloat(inputGroup.querySelector("input[type='number']").value);
         let justificationDropdown = inputGroup.querySelector(".justification-dropdown");
-        let justification = justificationDropdown.value; // Get selected justification text
+        let justification = justificationDropdown.value; 
 
         if (criteriaName && !isNaN(percentage)) {
             criteriaList.push({ "criterion": criteriaName, "score": percentage, "justification": justification });
         }
     });
 
-    console.log("Stored Criteria Data:", criteriaList); // Debugging output
+    console.log("Stored Criteria Data:", criteriaList); // output used for debugging
 }
-
 
 // Function to validate percentage input
 function validatePercentageInput(input) {
     let value = parseInt(input.value, 10);
 
     if (isNaN(value) || value < 0 || value > 100) {
-        input.value = ""; // Clear invalid input
+        input.value = ""; 
         Swal.fire({
             title: "Invalid Input!",
             text: "Please enter a whole number between 0 and 100.",
@@ -256,7 +253,6 @@ function sendData() {
     
 
 }
-
 
 // Attach event listener to the "Generate" button
 document.getElementById("generateFeedback").addEventListener("click", sendData);

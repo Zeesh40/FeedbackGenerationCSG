@@ -19,7 +19,6 @@
                     <span class="spacer"></span>
                 </div>
             </div>
-
             <div class="feedback-order-container">
                 <label for="orderSelect">Feedback Order:</label>
                 <select id="orderSelect" name="order">
@@ -28,7 +27,6 @@
                     <option value="low-mid-high">Low to High</option>
                 </select>
             </div>
-
             <div class="button-container">
                 <button type="button" class="btn add-btn" onclick="addCriteria()">Add</button>
                 <button type="button" class="btn generate-btn" id="generateFeedback">Generate</button>
@@ -37,14 +35,13 @@
         </form>
     </div>
 
-    <!-- Right Pane: Output Section -->
+    <!-- Right Pane -->
     <div class="right-pane">
         <div class="feedback-header">
             <h2>Generated Feedback</h2>
             <button id="copyFeedback" class="btn copy-btn" title="Copy to clipboard">
             <i class="fas fa-clipboard"></i>
             </button>
-    
         </div>          
         <div id="feedbackOutput" class="feedback-box"></div>
     </div>

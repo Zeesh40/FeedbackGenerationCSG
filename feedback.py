@@ -37,7 +37,6 @@ def generate_feedback(criteria_data, order="adaptive"):
         "As highlighted by how"
     ]
 
-
     templates = {
         "high": [
             "You demonstrated superb abilities in {criterion}, earning {score}%.",
@@ -171,12 +170,12 @@ def generate_feedback(criteria_data, order="adaptive"):
             paragraphs.append(" ".join(improvement_sentences))
 
 
-    # Add "Lastly," or "Finally," to the last real feedback sentence (excluding justification starters)
+    # Add 'wrap-up' phrasing'
     if paragraphs:
         last_paragraph = paragraphs[-1].strip()
         sentences = re.split(r'(?<=[.!?]) +', last_paragraph)
 
-        # Filter only actual feedback (not connectors or justifications)
+        # Filter only appropriate sentences
         real_sentences = [
             s for s in sentences
             if not s.strip().startswith(

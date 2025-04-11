@@ -1,6 +1,5 @@
 /*base.html */
 
-/* Reset some default margins and paddings */
 * {
   margin: 0;
   padding: 0;
@@ -15,17 +14,17 @@ body {
 
 /* Navbar styling */
 nav {
-  position: fixed; /* Fixes the navbar at the top */
-  top: 0; /* Aligns it to the top of the viewport */
-  left: 0; /* Ensures it starts from the left edge */
-  width: 100%; /* Spans the full width of the page */
-  background-color: #333; /* Dark background color */
-  color: white; /* White text color */
-  padding: 10px 20px; /* Adds padding around the navbar content */
-  z-index: 1000; /* Keeps it above other elements */
-  display: flex; /* Makes the navbar a flex container */
-  align-items: center; /* Aligns items vertically */
-  justify-content: space-between; /* Spaces out the items horizontally */
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  background-color: #333; 
+  color: white; 
+  padding: 10px 20px; 
+  z-index: 1000; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
 }
 
 nav h1 {
@@ -34,45 +33,42 @@ nav h1 {
 }
 
 .nav-wrapper ul {
-  list-style: none; /* Removes bullets */
-  display: flex; /* Displays list items horizontally */
+  list-style: none; 
+  display: flex; 
   margin: 0;
   padding: 0;
 }
 
 .nav-wrapper ul li {
-  margin-left: 20px; /* Adds space between list items */
+  margin-left: 20px; 
 }
 
 .nav-wrapper ul li a {
-  text-decoration: none; /* Removes underline */
-  color: white; /* White link text */
+  text-decoration: none; 
+  color: white; 
   font-size: 1.1em;
-  padding: 10px 10px; /* Adds padding around the link */
-  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px 10px; 
+  border-radius: 5px;
 }
 
 .nav-wrapper ul li a:hover {
-  background-color: #575757; /* Hover effect */
+  background-color: #575757; 
 }
 
-/* Content section styling */
 .content {
-  padding-top: 70px; /* Adds space to prevent overlap with the fixed navbar */
-  margin: 20px; /* Adds margin around the content */
+  padding-top: 70px; 
+  margin: 20px; 
 }
 
 .flash {
-  background-color: #ff9800; /* Flash message background color */
-  color: white; /* Flash message text color */
+  background-color: #ff9800; 
+  color: white; 
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
 }
 
 /* home.html */
-
-/* === Home Page Styling – Balanced Version === */
 
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -126,7 +122,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Info Sections */
 .home-section {
   width: 90%;
   max-width: 860px;
@@ -185,7 +180,6 @@ body {
   counter-reset: item;
 }
 
-/* Fade In Animation */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -200,13 +194,9 @@ body {
 
 /* End of home.html */
 
-
-
 /* feedback.html */
 
-/* New Styles for Two-Pane Feedback Layout */
-
-/* Main Container for Left and Right Panes */
+/* Main Container for left/right panes */
 .container {
   display: flex;
   flex-wrap: nowrap;
@@ -223,11 +213,10 @@ body {
   padding: 20px;
   border-right: 1px solid #ddd;
   background-color: #f9f9f9;
-  height: 400px; /* Fixed height to enable scrolling */
-  overflow-y: auto; /* Enables vertical scrollbar when content overflows */
-  max-height: 500px; /* Optional: Restrict maximum height */
+  height: 400px; 
+  overflow-y: auto;
+  max-height: 500px; 
 }
-
 
 /* Right Pane */
 .right-pane {
@@ -243,17 +232,14 @@ body {
   font-size: 18px;
 }
 
-/* Ensure input fields do not overflow */
-/* Add this or update your existing style */
 .input-group {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  padding-bottom: 10px; /* Add internal spacing */
-  margin-bottom: 20px;   /* Add external spacing */
-  border-bottom: 1px solid transparent; /* Optional visual guide for debugging */
+  padding-bottom: 10px; 
+  margin-bottom: 20px;   
+  border-bottom: 1px solid transparent; 
 }
-
 
 .input-group input {
   flex: 1;
@@ -265,33 +251,31 @@ body {
 .input-group input[type="text"],
 .input-group input[type="number"],
 .input-group select {
-    height: 30px; /* Adjusted from 40px to 35px for a better fit */
-    padding: 5px 10px; /* Keeps text from touching edges */
-    font-size: 12px; /* Consistent font size */
-    border-radius: 4px; /* Slightly rounded edges for better aesthetics */
-    border: 1px solid #ccc; /* Subtle border */
-    vertical-align: middle; /* Aligns text properly */
+    height: 30px; 
+    padding: 5px 10px; 
+    font-size: 12px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc; 
+    vertical-align: middle; 
 }
 
 .input-group input[type="number"] {
-  width: 85px !important; /* Ensures the width is fixed */
-  min-width: 85px; /* Prevents it from expanding */
-  max-width: 85px; /* Prevents it from stretching */
-  flex: 0; /* Stops it from growing due to flexbox */
-  text-align: center; /* Keeps numbers centered */
-  padding: 5px; /* Reduces padding to prevent expanding */
+  width: 85px !important; 
+  min-width: 85px; 
+  max-width: 85px; 
+  flex: 0; 
+  text-align: center; 
+  padding: 5px; 
 }
 
-
-/* Ensure criteria and input text match */
+/* Ensure criteria and input text font size match */
 .criteria-name {
-  font-size: 12px; /* Match the input font size */
+  font-size: 12px; 
 }
 
-/* Optional: Improve layout consistency */
 .criteria-row {
   display: flex;
-  align-items: center; /* Ensures inputs and labels align properly */
+  align-items: center; 
 }
 
 
@@ -299,16 +283,16 @@ body {
 .input-group {
   display: flex;
   align-items: center;
-  gap: 10px; /* Space between elements */
+  gap: 10px; 
 }
 
-/* Style the dropdown to look like a button */
+/* Style the dropdown similar to the buttons */
 .justification-dropdown {
-  appearance: none; /* Removes default styles */
+  appearance: none; 
   -webkit-appearance: none;
   -moz-appearance: none;
   
-  background-color: #7066e0; /* Blue button */
+  background-color: #7066e0; 
   color: white;
   padding: 10px 16px;
   font-size: 14px;
@@ -332,24 +316,20 @@ body {
   pointer-events: none;
 }
 
-/* Change background on hover */
 .justification-dropdown:hover {
   background-color: #8880f0; 
 }
 
-/* Style the dropdown options */
 .justification-dropdown option {
   background: white;
   color: black;
   padding: 10px;
 }
 
-/* Hover effect for options */
 .justification-dropdown option:hover {
   background: #f1f1f1;
 }
 
-/* Target the justification add button (+) */
 .input-group .add-justification {
   width: 32px;
   height: 32px;
@@ -365,7 +345,6 @@ body {
   justify-content: center;
 }
 
-/* Hover effect for justification add button */
 .input-group .add-justification:hover {
   background-color: #8880f0;
 }
@@ -386,7 +365,6 @@ body {
   cursor: pointer;
 }
 
-/* Hover effect for delete button */
 .input-group .remove-criteria:hover {
   background-color: #8880f0;
 }
@@ -398,7 +376,6 @@ body {
   margin-left: 5px;
 }
 
-/* Match the dropdowns to the justification style */
 select,
 select:focus,
 select:active {
@@ -425,10 +402,6 @@ select:focus {
   box-shadow: 0 0 0 2px #aaa6ff;
 }
 
-
-
-
-/* Ensure all inputs in a row are aligned properly */
 .input-group {
   display: flex;
   align-items: center;
@@ -437,48 +410,39 @@ select:focus {
   flex-wrap: nowrap;
 }
 
-
-/* Ensure the popup doesn't stretch input fields too far */
 .wide-popup {
-  width: 700px !important; /* Slightly reduce width */
+  width: 700px !important; /* 'important' assigns higher priortity' */
   padding: 20px;
 }
 
-/* Improve input field sizing */
 .custom-input {
-  width: 90% !important; /* Reduce width slightly for better spacing */
+  width: 90% !important; 
   height: 40px !important;
   font-size: 16px;
-  margin: 5px auto; /* Center the input fields */
-  display: block; /* Ensure inputs don't stretch to full width */
+  margin: 5px auto; 
+  display: block; 
 }
 
-/* Ensure SweetAlert input fields look consistent */
 .swal2-input {
   box-sizing: border-box;
   padding: 8px;
 }
 
-/* Button and Counter Container */
 .button-container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Spreads buttons and counter */
+  justify-content: space-between; 
   margin-top: 10px;
-  width: 100%; /* Ensures full width alignment */
+  width: 100%; 
 }
 
-/* Counter aligned to the right */
 #criteriaCounter {
   font-size: 16px;
   color: #7066e0;
-  margin-left: auto; /* Pushes counter to the right */
+  margin-left: auto; 
   font-weight: bold;
 }
 
-
-
-/* Container for Two Panes */
 .container {
   display: flex;
   width: 90%;
@@ -565,7 +529,7 @@ select:focus {
   min-height: 300px;
 }
 
-/* Responsive Design for Smaller Screens */
+/* Responsive design for smaller size screens creens */
 @media (max-width: 768px) {
   .container {
       flex-direction: column;
@@ -577,19 +541,16 @@ select:focus {
   }
 }
 
-/* Reduce score input width */
 input[type="number"].small-input {
   width: 70px;
 }
 
-/* Style the justification dropdown */
 select {
   padding: 5px;
   border-radius: 5px;
   font-size: 14px;
 }
 
-/* Feedback Order Label */
 .feedback-order-container label {
   font-weight: bold;
   font-size: 14px;
@@ -597,7 +558,6 @@ select {
   display: inline-block;
 }
 
-/* Style the Feedback Order dropdown */
 #orderSelect {
   background-color: #7066e0;
   color: white;
@@ -622,7 +582,7 @@ select {
 .feedback-header {
   display: flex;
   align-items: center;
-  gap: 12px; /* space between title and button */
+  gap: 12px; 
   margin-bottom: 10px;
 }
 
@@ -643,7 +603,7 @@ select {
   font-weight: 500;
   height: 34px;
   line-height: 1;
-  margin-top: -2px; /* ✅ Moves it up slightly */
+  margin-top: -2px; 
 }
 
 
